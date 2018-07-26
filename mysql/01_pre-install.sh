@@ -4,7 +4,8 @@
 # This should be changed in the future.
 setenforce 0
 
-# Add docker group and ourselves in
+# Add docker group and add ourselves and centos in
 groupadd docker
-usermod -aG docker $USER
+usermod -aG docker root
+usermod -aG docker centos
 
