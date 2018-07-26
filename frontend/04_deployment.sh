@@ -74,7 +74,13 @@ systemctl start httpd
 
 # Add entry points (HTTP and HTTPS)
 old_url_service=$(ss-get url.service)
-URL=$(ss-get hostname)
+# genostack cloud use private IPs
+if [ "$(ss-get cloudservice)" == "ifb-genouest-genostack" ]
+then
+  URL=openstack-${IP}.genouest.org
+else
+  URL=${IP}
+fi
 new_url_service=${old_url_service},http://${URL},https://${URL}
 ss-set url.service ${new_url_service}
 
