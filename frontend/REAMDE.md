@@ -31,7 +31,6 @@ Care must be taken to not mix PHP and bash strings and variables.
 
 Important:
 * MicroScope installation
-* Move code that rely on `ss-get` in `03_deployment.sh`
 
 Security:
 * Use parameter for mysql password
