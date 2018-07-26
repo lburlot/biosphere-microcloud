@@ -1,4 +1,4 @@
-# Installation of MicroScope web frontend.
+# Installation of MicroScope web frontend
 
 ## Introduction
 
