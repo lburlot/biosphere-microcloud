@@ -53,7 +53,7 @@ echo("?>");
 EOF
 
 # Set rights on file
-chmod 0700 ${phpmyadmin_config_file}
+chmod 0644 ${phpmyadmin_config_file}
 
 # Backup Apache configuration file for phpMyAdmin
 phpmyadmin_apache_file=/etc/httpd/conf.d/phpMyAdmin.conf
