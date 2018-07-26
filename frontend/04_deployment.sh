@@ -77,7 +77,7 @@ old_url_service=$(ss-get url.service)
 # genostack cloud use private IPs
 if [ "$(ss-get cloudservice)" == "ifb-genouest-genostack" ]
 then
-  URL=openstack-${IP}.genouest.org
+  URL=openstack-${IP//\./-}.genouest.org
 else
   URL=${IP}
 fi
