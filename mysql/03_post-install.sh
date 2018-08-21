@@ -40,10 +40,11 @@ docker cp lib_mysqludf_Sequtils-0.4.7.tar.gz ${CONTAINER_NAME}:/
 docker exec ${CONTAINER_NAME} tar -xzf lib_mysqludf_Sequtils-0.4.7.tar.gz
 
 # Compilation & installation (we need the password)
+MYSQL_PASSWORD=mypassword
 docker exec ${CONTAINER_NAME} sh -c "\
 cd lib_mysqludf_Sequtils-0.4.7/src && \
 autoreconf -fi &&\
-./configure --with-mysqlbin='mysql -u root --password=mypassword' && make && make install
+./configure --with-mysqlbin='mysql -u root --password=${MYSQL_PASSWORD}' && make && make install
 "
 # Remove file and folder
 docker exec ${CONTAINER_NAME} rm -rf lib_mysqludf_Sequtils-0.4.7.tar.gz lib_mysqludf_Sequtils-0.4.7
