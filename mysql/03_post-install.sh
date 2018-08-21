@@ -45,8 +45,8 @@ cd lib_mysqludf_Sequtils-0.4.7/src && \
 autoreconf -fi &&\
 ./configure --with-mysqlbin='mysql -u root --password=mypassword' && make && make install
 "
-# Remove files
-docker exec ${CONTAINER_NAME} sh -c "rm -rf lib_mysqludf_Sequtils-0.4.7.tar.gz lib_mysqludf_Sequtils-0.4.7.tar.gz"
+# Remove file and folder
+docker exec ${CONTAINER_NAME} rm -rf lib_mysqludf_Sequtils-0.4.7.tar.gz lib_mysqludf_Sequtils-0.4.7
 
 # Remove packages
 docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y remove ${PACKAGES_FOR_UDF} && apt-get -y autoremove"
