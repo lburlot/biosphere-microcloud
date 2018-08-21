@@ -31,7 +31,8 @@ docker run --detach --name=${CONTAINER_NAME} --env="MYSQL_ROOT_PASSWORD=mypasswo
 ##################
 
 # Install some packages inside the container
-docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y install build-essential autoconf automake libtool procps libmysqlclient-dev"
+PACKAGES_FOR_UDF="build-essential autoconf automake libtool procps libmysqlclient-dev"
+docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y install ${PACKAGES_FOR_UDF}"
 
 # Download, copy the files and uncompress the sources
 curl -o lib_mysqludf_Sequtils-0.4.7.tar.gz https://www.genoscope.cns.fr/agc/ftp/lib_mysqludf_Sequtils-0.4.7.tar.gz
@@ -48,5 +49,5 @@ autoreconf -fi &&\
 docker exec ${CONTAINER_NAME} sh -c "rm -rf lib_mysqludf_Sequtils-0.4.7.tar.gz lib_mysqludf_Sequtils-0.4.7.tar.gz"
 
 # Remove packages
-docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y remove build-essential autoconf automake libtool procps libmysqlclient-dev && apt-get -y autoremove"
+docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y remove ${PACKAGES_FOR_UDF} && apt-get -y autoremove"
 
