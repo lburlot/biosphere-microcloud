@@ -16,9 +16,9 @@ MicroScope installation is not done yet.
 
 ## Technical notes
 
-### Installation of phpMyAdmin (02_post-install.sh)
+### Installation of phpMyAdmin (04_deployment.sh)
 
-We must set the IP adress of the MySQL server in the configuration file.
+We must set the IP address of the MySQL server in the configuration file (hence the presence in `04_deployment.sh`).
 The trick is to do it in PHP with an HERE document:
 * the basic syntax is multi-line HERE doc with redirection
 * `require_once` is used to load the configuration; we can then modify it in PHP
