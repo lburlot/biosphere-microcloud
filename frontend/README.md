@@ -30,6 +30,7 @@ Care must be taken to not mix PHP and bash strings and variables.
 ## TODO
 
 Important:
+* Apache error doc (needed for MicroScope)
 * MicroScope installation
 
 Security:
