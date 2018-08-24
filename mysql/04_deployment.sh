@@ -13,7 +13,8 @@ docker run --detach --name=${CONTAINER_NAME} --env="MYSQL_RANDOM_ROOT_PASSWORD=t
 MYSQL_PASSWORD=$(docker logs ${CONTAINER_NAME} 2>&1 | grep GENERATED | awk '{print $NF}')
 
 # Export password
-ss-set mysqlRootPassword ${MYSQL_PASSWORD}
+ss-set mysqlRootPassword "true"
+
 
 ##################
 # MicroScope UDF #
@@ -45,5 +46,5 @@ docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y remove ${PACKA
 ####################
 
 ss-set mysqlBackendReady "true"
-ss-display "Mysql backend Ready"
+ss-display "${MYSQL_PASSWORD}"
 
