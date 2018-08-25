@@ -10,10 +10,10 @@ CONTAINER_NAME=mysql01
 docker run --detach --name=${CONTAINER_NAME} --env="MYSQL_RANDOM_ROOT_PASSWORD=true" -p 3306:3306 mysql:5.7
 
 # Get the generated password
-MYSQL_PASSWORD=$(docker logs ${CONTAINER_NAME} 2>&1 | grep GENERATED | awk '{print $NF}')
+export MYSQL_PASSWORD=$(docker logs ${CONTAINER_NAME} 2>&1 | grep GENERATED | awk '{print $NF}')
 
 # Export password
-ss-set mysqlRootPassword "true"
+ss-set mysqlRootPassword "${MYSQL_PASSWORD}"
 
 
 ##################
