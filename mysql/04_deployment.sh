@@ -48,5 +48,5 @@ docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y remove ${PACKA
 ####################
 
 ss-set mysqlBackendReady "true"
-ss-display "MySQL backend ready" "
+ss-display "MySQL backend ready"
 
