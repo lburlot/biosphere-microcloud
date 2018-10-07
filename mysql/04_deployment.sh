@@ -37,8 +37,8 @@ i=1   # Number of tests already done
 until 0
 do
   echo "Waiting MySQL server (" $i"/"$MAX")"
-  # Test the connection
-  if mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'quit'
+  # Test the connection (`mysql` is not installed on the server but inside docker)
+  if docker exec ${CONTAINER_NAME} mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'quit'
   then
     break
   fi
