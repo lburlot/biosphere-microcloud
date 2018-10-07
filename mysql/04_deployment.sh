@@ -32,9 +32,9 @@ docker exec ${CONTAINER_NAME} tar -xzf lib_mysqludf_sequtils-${MIC_UDF_VERSION}.
 # MySQL must be started before installing the UDF so we actively wait a bit
 # by testing the connection. This test is placed here just before the real installation.
 ss-display "Waiting MySQL server to start"
-MAX=5 # Maw number of tests
-i=1   # Number of tests already done
-until 0
+MAX=10 # Max number of tests
+i=1    # Number of tests already done
+until false
 do
   echo "Waiting MySQL server (" $i"/"$MAX")"
   # Test the connection (`mysql` is not installed on the server but inside docker)
