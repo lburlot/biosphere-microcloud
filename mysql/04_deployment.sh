@@ -63,7 +63,7 @@ cd lib_mysqludf_sequtils-${MIC_UDF_VERSION}/ && \
 docker exec ${CONTAINER_NAME} rm -rf lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz lib_mysqludf_sequtils-${MIC_UDF_VERSION}
 
 # Remove packages
-docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y remove ${MIC_UDF_PACKAGES} && apt-get -y autoremove"
+docker exec ${CONTAINER_NAME} sh -c "apt-get -y remove ${MIC_UDF_PACKAGES} && apt-get -y autoremove"
 
 ####################
 # Backend is ready #
