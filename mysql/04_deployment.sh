@@ -9,12 +9,9 @@
 CONTAINER_NAME=mysql01
 export MYSQL_ROOT_PASSWORD="$(pwgen -1 32)"
 docker run --detach --name=${CONTAINER_NAME} --env="MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" -p 3306:3306 mysql:5.7
-# MySQL must be start before installing the UDF so we wait a bit
-sleep 10
 
 # Export password
 ss-set mysqlRootPassword ${MYSQL_ROOT_PASSWORD}
-
 
 ##################
 # MicroScope UDF #
@@ -32,7 +29,32 @@ curl -o lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz https://www.genoscope.cn
 docker cp lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz ${CONTAINER_NAME}:/
 docker exec ${CONTAINER_NAME} tar -xzf lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz
 
+# MySQL must be started before installing the UDF so we actively wait a bit
+# by testing the connection. This test is placed here just before the real installation.
+ss-display "Waiting MySQL server to start"
+MAX=5 # Maw number of tests
+i=1   # Number of tests already done
+until 0
+do
+  echo "Waiting MySQL server (" $i"/"$MAX")"
+  # Test the connection
+  if mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'quit'
+  then
+    break
+  fi
+  i=$(( i + 1))
+  if [ $i -gt $MAX ]
+  then
+    echo "MySQL server took too long to start"
+    exit 1
+  fi
+  echo "Waiting MySQL server"
+  sleep 3
+done
+echo "MySQL server started"
+
 # Compilation & installation (we need the password)
+ss-display "Starting installation of MicroScope UDF"
 docker exec ${CONTAINER_NAME} sh -c "\
 cd lib_mysqludf_sequtils-${MIC_UDF_VERSION}/ && \
 ./configure && MYSQL_USER=root MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD} make install
