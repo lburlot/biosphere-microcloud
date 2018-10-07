@@ -19,6 +19,7 @@ ss-set mysqlRootPassword ${MYSQL_ROOT_PASSWORD}
 
 # Version to use
 MIC_UDF_VERSION=0.4.7
+# Packages needed (inside the container)
 MIC_UDF_PACKAGES="build-essential procps libmysqlclient-dev"
 
 # Install some packages inside the container
@@ -29,14 +30,14 @@ curl -o lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz https://www.genoscope.cn
 docker cp lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz ${CONTAINER_NAME}:/
 docker exec ${CONTAINER_NAME} tar -xzf lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz
 
-# MySQL must be started before installing the UDF so we actively wait a bit
-# by testing the connection. This test is placed here just before the real installation.
+# MySQL must be started before installing the UDF so we actively wait a bit by testing the connection.
+# This test is placed here just before the real installation.
 ss-display "Waiting MySQL server to start"
 MAX=10 # Max number of tests
 i=1    # Number of tests already done
 until false
 do
-  echo "Waiting MySQL server (" $i"/"$MAX")"
+  echo "Waiting MySQL server ("$i"/"$MAX")"
   # Test the connection (`mysql` is not installed on the server but inside docker)
   if docker exec ${CONTAINER_NAME} mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'quit'
   then
